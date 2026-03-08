@@ -67,7 +67,7 @@ const displayDataCards = async () => {
                 </div>
         `;
             cardContainer.appendChild(card);
-        } else{
+        } else {
             card.innerHTML = `
                 <div class="w-64 h-full shadow-lg rounded p-4 border-t-2 border-[#A855F7] space-y-3">
                     <div class="flex justify-between items-center">
@@ -86,7 +86,7 @@ const displayDataCards = async () => {
                     </div>
                 </div>
         `;
-        cardContainer.appendChild(card);
+            cardContainer.appendChild(card);
         }
     }
 };
@@ -96,14 +96,39 @@ const mainContainer = document.querySelector("main");
 mainContainer.addEventListener("click", async (event) => {
     if (event.target.id === "all-btn") {
         loadAllData();
+        displayDataCards();
     }
 
     if (event.target.id === "open-btn") {
         const issues = await loadAllData();
         let openIssue = 0;
+        cardContainer.innerHTML = "";
+
         issues.map((issue) => {
             if (issue.status === "open") {
                 openIssue++;
+
+                // rendering open cards
+                const openCard = document.createElement("div");
+                openCard.innerHTML = `
+                <div class="w-64 h-full shadow-lg rounded p-4 border-t-2 border-[#00A96E] space-y-3">
+                    <div class="flex justify-between items-center">
+                        <img src="./assets/Open-Status.png" alt="" />
+                        ${priorityChecker(issue.priority)}
+                    </div>
+                    <h3 class="font-semibold text-sm">${issue.title}</h3>
+                    <p class="text-xs text-gray-500">${issue.description}</p>
+                    <div>
+                        ${createElements(issue.labels)}
+                    </div>
+                    <hr class="text-gray-400">
+                    <div class="py-4 text-xs text-gray-500">
+                        <p>${issue.author}</p>
+                        <p>${new Date(issue.createdAt).toLocaleDateString()}</p>
+                    </div>
+                </div>
+        `;
+                cardContainer.appendChild(openCard);
             }
         });
         totalIssues.innerText = openIssue;
