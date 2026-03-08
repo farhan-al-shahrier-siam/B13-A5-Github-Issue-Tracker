@@ -50,5 +50,40 @@
                 </div>
             </div>
         </nav>
+
+        <main>
+            <!-- toggle Buttons all, open closed -->
+            <section class="max-w-[1110px] mx-auto p-6 shadow-lg rounded-lg mt-12">
+                <button onclick="toggleButtons('all-btn')" id="all-btn" class="top-btn btn btn-primary py-3 px-12">All</button>
+                <button onclick="toggleButtons('open-btn')" id="open-btn" class="top-btn btn py-3 px-12">Open</button>
+                <button onclick="toggleButtons('closed-btn')" id="closed-btn" class="top-btn btn py-3 px-12">Closed</button>
+            </section>
+
+            <section class="max-w-[1110px] mx-auto p-6 shadow-lg rounded-lg mt-4 flex justify-between items-center">
+                <div class="flex gap-2">
+                    <img class="bg-[#ECE4FF] rounded-full p-[9px]" src="./assets/Aperture.png" alt="" />
+                    <div>
+                        <h2><span id="total-issues">0</span> Issues</h2>
+                        <p>Track and manage your project issues</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <p>
+                        <span class="text-[#00A96E]"><i class="fa-solid fa-circle"></i></span> Open
+                    </p>
+                    <p>
+                        <span class="text-[#A855F7]"><i class="fa-solid fa-circle"></i></span> Closed
+                    </p>
+                </div>
+            </section>
+
+            <!-- all issues depend on button selection -->
+            <section class="max-w-[1110px] mx-auto p-6 shadow-lg rounded-lg">
+                <!-- issue cards -->
+                
+            </section>
+        </main>
+
+        <script src="./script/home.js"></script>
     </body>
 </html>
