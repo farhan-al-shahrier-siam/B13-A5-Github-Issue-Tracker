@@ -78,7 +78,7 @@
             </section>
 
             <!-- all issues depend on button selection -->
-            <section id="card-Container" class="max-w-[1110px] mx-auto p-6 shadow-lg rounded-lg grid grid-cols-1  md:grid-cols-2 lg:grid-cols-4 gap-2">
+            <section id="card-Container" class="max-w-[1110px] mx-auto p-6 shadow-lg rounded-lg grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
                 <!-- issue cards -->
                 <div class="w-64 shadow-lg rounded p-4 border-t-2 border-[#00A96E] space-y-3">
                     <div class="flex justify-between items-center">
@@ -91,12 +91,30 @@
                         <span class="text-red-500 border bg-red-100 rounded-xl p-1 text-xs"><i class="fa-solid fa-bug"></i> BUG</span>
                         <span class="text-[#D97706] border bg-[#FFF8DB] rounded-xl p-1 text-xs"><i class="fa-solid fa-life-ring"></i> HELP WANTED</span>
                     </div>
-                    <hr class="text-gray-400">
+                    <hr class="text-gray-400" />
                     <div class="py-4 text-xs text-gray-500">
                         <p>#1 by john_doe</p>
                         <p>1/15/2024</p>
                     </div>
                 </div>
+            </section>
+
+            <!-- modal -->
+            <section>
+                <!-- Open the modal using ID.showModal() method -->
+                <button class="btn" onclick="my_modal_1.showModal()">open modal</button>
+                <dialog id="my_modal_1" class="modal">
+                    <div class="modal-box">
+                        <h3 class="text-lg font-bold">Hello!</h3>
+                        <p class="py-4">Press ESC key or click the button below to close</p>
+                        <div class="modal-action">
+                            <form method="dialog">
+                                <!-- if there is a button in form, it will close the modal -->
+                                <button class="btn btn-primary">Close</button>
+                            </form>
+                        </div>
+                    </div>
+                </dialog>
             </section>
         </main>
 

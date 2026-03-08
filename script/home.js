@@ -135,10 +135,34 @@ mainContainer.addEventListener("click", async (event) => {
     }
     if (event.target.id === "closed-btn") {
         const issues = await loadAllData();
+
+        cardContainer.innerHTML = "";
         let closedIssue = 0;
         issues.map((issue) => {
             if (issue.status === "closed") {
                 closedIssue++;
+
+                // rendering closed cards
+                const closedCard = document.createElement("div");
+                closedCard.innerHTML = `
+                <div class="w-64 h-full shadow-lg rounded p-4 border-t-2 border-[#A855F7] space-y-3">
+                    <div class="flex justify-between items-center">
+                        <img src="./assets/Closed- Status .png" alt="" />
+                        ${priorityChecker(issue.priority)}
+                    </div>
+                    <h3 class="font-semibold text-sm">${issue.title}</h3>
+                    <p class="text-xs text-gray-500">${issue.description}</p>
+                    <div>
+                        ${createElements(issue.labels)}
+                    </div>
+                    <hr class="text-gray-400">
+                    <div class="py-4 text-xs text-gray-500">
+                        <p>${issue.author}</p>
+                        <p>${new Date(issue.createdAt).toLocaleDateString()}</p>
+                    </div>
+                </div>
+        `;
+                cardContainer.appendChild(closedCard);
             }
         });
         totalIssues.innerText = closedIssue;
