@@ -77,10 +77,18 @@
                 </div>
             </section>
 
-            <!-- all issues depend on button selection -->
-            <section id="card-Container" class="max-w-[1110px] mx-auto p-6 shadow-lg rounded-lg grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+            <!-- all issues depend on button  selection -->
+            <section class="max-w-[1110px] mx-auto p-6 shadow-lg rounded-lg">
                 <!-- issue cards -->
-                
+                <section id="spinner" class="flex justify-center items-center p-10 hidden">
+                    <span class="loading loading-ring loading-xs"></span>
+                    <span class="loading loading-ring loading-sm"></span>
+                    <span class="loading loading-ring loading-md"></span>
+                    <span class="loading loading-ring loading-lg"></span>
+                    <span class="loading loading-ring loading-xl"></span>
+                </section>
+
+                <div id="card-Container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2"></div>
             </section>
 
             <!-- modal -->
@@ -89,9 +97,7 @@
                 <!-- <button class="btn" onclick="my_modal_1.showModal()">open modal</button> -->
                 <dialog id="card_modal" class="modal">
                     <div class="modal-box">
-                        <div id="single-issue-modal">
-                            
-                        </div>
+                        <div id="single-issue-modal"></div>
                         <div class="modal-action">
                             <form method="dialog">
                                 <!-- if there is a button in form, it will close the modal -->

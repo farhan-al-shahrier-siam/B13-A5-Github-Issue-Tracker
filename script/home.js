@@ -1,3 +1,14 @@
+// spinner 
+const manageSpinner = (status) => {
+    if (status) {
+        document.getElementById("spinner").classList.remove("hidden");
+        document.getElementById("card-Container").classList.add("hidden");
+    } else {
+        document.getElementById("spinner").classList.add("hidden");
+        document.getElementById("card-Container").classList.remove("hidden");
+    }
+};
+
 const createElements = (arr) => {
     let htmlElement = [];
     arr.map((el) => {
@@ -43,6 +54,7 @@ loadAllData();
 
 const cardContainer = document.getElementById("card-Container");
 const displayDataCards = async () => {
+    manageSpinner(true);
     const allIssues = await loadAllData();
     cardContainer.innerHTML = "";
     for (const issue of allIssues) {
@@ -89,6 +101,7 @@ const displayDataCards = async () => {
             cardContainer.appendChild(card);
         }
     }
+    manageSpinner(false);
 };
 displayDataCards();
 
@@ -100,6 +113,7 @@ mainContainer.addEventListener("click", async (event) => {
     }
 
     if (event.target.id === "open-btn") {
+        manageSpinner(true);
         const issues = await loadAllData();
         let openIssue = 0;
         cardContainer.innerHTML = "";
@@ -131,9 +145,11 @@ mainContainer.addEventListener("click", async (event) => {
                 cardContainer.appendChild(openCard);
             }
         });
+        manageSpinner(false);
         totalIssues.innerText = openIssue;
     }
     if (event.target.id === "closed-btn") {
+        manageSpinner(true);
         const issues = await loadAllData();
 
         cardContainer.innerHTML = "";
@@ -165,6 +181,7 @@ mainContainer.addEventListener("click", async (event) => {
                 cardContainer.appendChild(closedCard);
             }
         });
+        manageSpinner(false);
         totalIssues.innerText = closedIssue;
     }
 });
@@ -203,6 +220,7 @@ const displayModal = (issue) => {
 // searching
 
 document.getElementById("seach-btn").addEventListener("click", async () => {
+    manageSpinner(true);
     const searchInput = document.getElementById("input-search");
     const searchValue = searchInput.value.trim().toLowerCase();
 
@@ -257,5 +275,6 @@ document.getElementById("seach-btn").addEventListener("click", async () => {
             cardContainer.appendChild(card);
         }
     }
+    manageSpinner(false);
     searchInput.value = "";
 });
