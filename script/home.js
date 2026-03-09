@@ -182,7 +182,7 @@ const displayModal = (issue) => {
     const singleIssueModal = document.getElementById("single-issue-modal");
     singleIssueModal.innerHTML = `
                             <h2 class="font-bold text-2xl">${issue.title}</h2>
-                            <p class="text-xs mt-2">${issue.status =="open" ?`<span class="bg-green-600  text-white p-[6px] rounded-lg">Opened</span>` :`<span class="bg-purple-600  text-white p-[6px] rounded-lg">Closed</span>`} Opened by: ${issue.assignee? issue.assignee : " "} Date: ${new Date(issue.updatedAt).toLocaleDateString()}</p>
+                            <p class="text-xs mt-2">${issue.status == "open" ? `<span class="bg-green-600  text-white p-[6px] rounded-lg">Opened</span>` : `<span class="bg-purple-600  text-white p-[6px] rounded-lg">Closed</span>`} Opened by: ${issue.assignee ? issue.assignee : " "} Date: ${new Date(issue.updatedAt).toLocaleDateString()}</p>
                             <div class="my-6">
                                 ${createElements(issue.labels)}
                             </div>
@@ -190,7 +190,7 @@ const displayModal = (issue) => {
                             <div class="grid grid-cols-2">
                                 <div>
                                     <p class="text-sm text-[#64748B]">Assignee:</p>
-                                    <h3 class="font-semibold">${issue.assignee? issue.assignee : " "}</h3>
+                                    <h3 class="font-semibold">${issue.assignee ? issue.assignee : " "}</h3>
                                 </div>
                                 <div>
                                     <p class="text-sm text-[#64748B] mb-1">Priority:</p>
@@ -199,3 +199,63 @@ const displayModal = (issue) => {
                             </div>
     `;
 };
+
+// searching
+
+document.getElementById("seach-btn").addEventListener("click", async () => {
+    const searchInput = document.getElementById("input-search");
+    const searchValue = searchInput.value.trim().toLowerCase();
+
+    const url = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+    const allIssues = await data.data;
+    totalIssues.innerText = allIssues.length;
+    cardContainer.innerHTML = "";
+    for (const issue of allIssues) {
+        const card = document.createElement("div");
+        if (issue.status === "open") {
+            card.innerHTML = `
+                <div onclick="card_modal.showModal(); loadSingleIssue(${issue.id})" class="w-64 h-full shadow-lg rounded p-4 border-t-2 border-[#00A96E] space-y-3">
+                    <div class="flex justify-between items-center">
+                        <img src="./assets/Open-Status.png" alt="" />
+                        ${priorityChecker(issue.priority)}
+                    </div>
+                    <h3 class="font-semibold text-sm">${issue.title}</h3>
+                    <p class="text-xs text-gray-500">${issue.description}</p>
+                    <div>
+                        ${createElements(issue.labels)}
+                    </div>
+                    <hr class="text-gray-400">
+                    <div class="py-4 text-xs text-gray-500">
+                        <p>${issue.author}</p>
+                        <p>${new Date(issue.createdAt).toLocaleDateString()}</p>
+                    </div>
+                </div>
+        `;
+            cardContainer.appendChild(card);
+        } else {
+            card.innerHTML = `
+                <div onclick="card_modal.showModal(); loadSingleIssue(${issue.id})" class="w-64 h-full shadow-lg rounded p-4 border-t-2 border-[#A855F7] space-y-3">
+                    <div class="flex justify-between items-center">
+                        <img src="./assets/Closed- Status .png" alt="" />
+                        ${priorityChecker(issue.priority)}
+                    </div>
+                    <h3 class="font-semibold text-sm">${issue.title}</h3>
+                    <p class="text-xs text-gray-500">${issue.description}</p>
+                    <div>
+                        ${createElements(issue.labels)}
+                    </div>
+                    <hr class="text-gray-400">
+                    <div class="py-4 text-xs text-gray-500">
+                        <p>${issue.author}</p>
+                        <p>${new Date(issue.createdAt).toLocaleDateString()}</p>
+                    </div>
+                </div>
+        `;
+            cardContainer.appendChild(card);
+        }
+    }
+    searchInput.value = "";
+});
