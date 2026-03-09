@@ -102,11 +102,28 @@
             <!-- modal -->
             <section>
                 <!-- Open the modal using ID.showModal() method -->
-                <button class="btn" onclick="my_modal_1.showModal()">open modal</button>
-                <dialog id="my_modal_1" class="modal">
+                <!-- <button class="btn" onclick="my_modal_1.showModal()">open modal</button> -->
+                <dialog id="card_modal" class="modal">
                     <div class="modal-box">
-                        <h3 class="text-lg font-bold">Hello!</h3>
-                        <p class="py-4">Press ESC key or click the button below to close</p>
+                        <div id="single-issue-modal">
+                            <h2 class="font-bold text-2xl">Fix broken image uploads</h2>
+                            <p class="text-xs mt-2"><span class="bg-green-600  text-white p-[6px] rounded-lg">Opened</span> Opened by Fahim Ahmed 22/02/2026</p>
+                            <div class="my-6">
+                                <p>Bug</p>
+                                <p>help wanted</p>
+                            </div>
+                            <p class="text-sm text-[#64748B] mb-6">The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.</p>
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <p class="text-sm text-[#64748B]">Assignee:</p>
+                                    <h3 class="font-semibold">Fahim Ahmed</h3>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[#64748B]">Priority:</p>
+                                    <p><span>High</span></p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="modal-action">
                             <form method="dialog">
                                 <!-- if there is a button in form, it will close the modal -->

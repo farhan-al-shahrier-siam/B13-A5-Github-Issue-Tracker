@@ -49,7 +49,7 @@ const displayDataCards = async () => {
         const card = document.createElement("div");
         if (issue.status === "open") {
             card.innerHTML = `
-                <div class="w-64 h-full shadow-lg rounded p-4 border-t-2 border-[#00A96E] space-y-3">
+                <div onclick="card_modal.showModal(); loadSingleIssue(${issue.id})" class="w-64 h-full shadow-lg rounded p-4 border-t-2 border-[#00A96E] space-y-3">
                     <div class="flex justify-between items-center">
                         <img src="./assets/Open-Status.png" alt="" />
                         ${priorityChecker(issue.priority)}
@@ -69,7 +69,7 @@ const displayDataCards = async () => {
             cardContainer.appendChild(card);
         } else {
             card.innerHTML = `
-                <div class="w-64 h-full shadow-lg rounded p-4 border-t-2 border-[#A855F7] space-y-3">
+                <div onclick="card_modal.showModal(); loadSingleIssue(${issue.id})" class="w-64 h-full shadow-lg rounded p-4 border-t-2 border-[#A855F7] space-y-3">
                     <div class="flex justify-between items-center">
                         <img src="./assets/Closed- Status .png" alt="" />
                         ${priorityChecker(issue.priority)}
@@ -111,7 +111,7 @@ mainContainer.addEventListener("click", async (event) => {
                 // rendering open cards
                 const openCard = document.createElement("div");
                 openCard.innerHTML = `
-                <div class="w-64 h-full shadow-lg rounded p-4 border-t-2 border-[#00A96E] space-y-3">
+                <div onclick="card_modal.showModal(); loadSingleIssue(${issue.id})" class="w-64 h-full shadow-lg rounded p-4 border-t-2 border-[#00A96E] space-y-3">
                     <div class="flex justify-between items-center">
                         <img src="./assets/Open-Status.png" alt="" />
                         ${priorityChecker(issue.priority)}
@@ -145,7 +145,7 @@ mainContainer.addEventListener("click", async (event) => {
                 // rendering closed cards
                 const closedCard = document.createElement("div");
                 closedCard.innerHTML = `
-                <div class="w-64 h-full shadow-lg rounded p-4 border-t-2 border-[#A855F7] space-y-3">
+                <div onclick="card_modal.showModal(); loadSingleIssue(${issue.id})" class="w-64 h-full shadow-lg rounded p-4 border-t-2 border-[#A855F7] space-y-3">
                     <div class="flex justify-between items-center">
                         <img src="./assets/Closed- Status .png" alt="" />
                         ${priorityChecker(issue.priority)}
@@ -168,3 +168,34 @@ mainContainer.addEventListener("click", async (event) => {
         totalIssues.innerText = closedIssue;
     }
 });
+
+const loadSingleIssue = (id) => {
+    const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+    // console.log(url)
+    fetch(url)
+        .then((res) => res.json())
+        .then((data) => displayModal(data.data));
+};
+
+const displayModal = (issue) => {
+    // console.log(issue)
+    const singleIssueModal = document.getElementById("single-issue-modal");
+    singleIssueModal.innerHTML = `
+                            <h2 class="font-bold text-2xl">${issue.title}</h2>
+                            <p class="text-xs mt-2">${issue.status =="open" ?`<span class="bg-green-600  text-white p-[6px] rounded-lg">Opened</span>` :`<span class="bg-purple-600  text-white p-[6px] rounded-lg">Closed</span>`} Opened by: ${issue.assignee? issue.assignee : " "} Date: ${new Date(issue.updatedAt).toLocaleDateString()}</p>
+                            <div class="my-6">
+                                ${createElements(issue.labels)}
+                            </div>
+                            <p class="text-sm text-[#64748B] mb-6">${issue.description}</p>
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <p class="text-sm text-[#64748B]">Assignee:</p>
+                                    <h3 class="font-semibold">${issue.assignee? issue.assignee : " "}</h3>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-[#64748B] mb-1">Priority:</p>
+                                    ${priorityChecker(issue.priority)}
+                                </div>
+                            </div>
+    `;
+};
